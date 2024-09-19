@@ -7,8 +7,8 @@ function AppNavbar() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const navigate = useNavigate();
 
+	// Check if user is logged in by checking the accessToken in localStorage
 	useEffect(() => {
-		// Check if the user is logged in by checking localStorage
 		const accessToken = localStorage.getItem('accessToken');
 		if (accessToken) {
 			setIsLoggedIn(true);
@@ -17,8 +17,8 @@ function AppNavbar() {
 		}
 	}, []);
 
+	// Handle logout functionality
 	const handleLogout = () => {
-		// Clear localStorage
 		localStorage.removeItem('accessToken');
 		localStorage.removeItem('userName');
 		localStorage.removeItem('apiKey');
@@ -39,18 +39,35 @@ function AppNavbar() {
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="me-auto">
+					<Nav className="ml-auto">
 						<Nav.Link
 							as={Link}
 							to="/">
 							Home
 						</Nav.Link>
+						<Nav.Link
+							as={Link}
+							to="/venues">
+							Venues
+						</Nav.Link>
+
+						{/* Conditionally render links based on login status */}
 						{isLoggedIn ? (
 							<>
 								<Nav.Link
 									as={Link}
 									to="/dashboard">
-									Dashboard
+									Profile
+								</Nav.Link>
+								<Nav.Link
+									as={Link}
+									to="/bookings">
+									My Bookings
+								</Nav.Link>
+								<Nav.Link
+									as={Link}
+									to="/myvenues">
+									My Venues
 								</Nav.Link>
 								<Nav.Link onClick={handleLogout}>Logout</Nav.Link>
 							</>

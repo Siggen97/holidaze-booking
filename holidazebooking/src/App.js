@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import './assets/styles/App.css';
 import Home from './pages/Home';
 import VenueDetails from './pages/VenueDetails';
 import Booking from './pages/Booking';
@@ -9,17 +10,25 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import AppNavbar from './layout/Navbar';
 import AppFooter from './layout/Footer';
+import CreateVenue from './pages/CreateVenue';
+import Venues from './pages/Venues';
 
 function App() {
+
+
 	return (
-		<Router>
-			<div className="App">
+		<div className="App">
+			<Router>
 				<AppNavbar />
 				<div className="container mt-3">
 					<Routes>
 						<Route
 							path="/"
 							element={<Home />}
+						/>
+						<Route
+							path="/venues"
+							element={<Venues />}
 						/>
 						<Route
 							path="/venue/:id"
@@ -41,11 +50,15 @@ function App() {
 							path="/dashboard"
 							element={<Dashboard />}
 						/>
+						<Route
+							path="/create-venue"
+							element={<CreateVenue />}
+						/>
 					</Routes>
 				</div>
 				<AppFooter />
-			</div>
-		</Router>
+			</Router>
+		</div>
 	);
 }
 

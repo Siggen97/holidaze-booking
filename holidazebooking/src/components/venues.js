@@ -33,7 +33,7 @@ export default function FetchAllVenues() {
 		<div>
 			<input
 				type="text"
-				className="form-control mb-3"
+				className="form-control mb-5"
 				placeholder="Search for venues..."
 				value={searchTerm}
 				onChange={handleSearchChange}
@@ -45,9 +45,17 @@ export default function FetchAllVenues() {
 						key={venue.id}
 						className="venue-item mb-5">
 						{/* Venue Display */}
+						{venue.media.length > 0 && (
+							<img
+								className="card-img-top"
+								src={venue.media[0].url}
+								alt={venue.media[0].alt || venue.name}
+								style={{ height: '200px', objectFit: 'cover' }}
+							/>
+						)}
 						<h5>{venue.name}</h5>
 						<p>{venue.description}</p>
-						<Link to={`/venue/${venue.id}`}>More details</Link>
+						<Link className='App-link btn btn-info' to={`/venue/${venue.id}`}>More details</Link>
 					</div>
 				))}
 			</div>

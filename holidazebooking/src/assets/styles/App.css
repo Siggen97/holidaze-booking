@@ -7,15 +7,18 @@ body {
   background-color: #f8f9fa;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-/* App Wrapper */
 .App {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* Ensure the app takes up the full viewport height */
 }
 
 /* Header Styles */
@@ -26,13 +29,17 @@ code {
   color: white;
 }
 
+.container {
+  flex: 1; /* Allow the container to grow and fill available space */
+}
+
 /* Footer Styles */
 .App-footer {
   background-color: #343a40;
   color: white;
-  padding: 10px 0;
+  padding: 15px 0;
   text-align: center;
-  margin-top: auto;
+  margin-top: auto; /* Push footer to bottom when content is short */
 }
 
 /* Link Styles */
@@ -70,4 +77,32 @@ code {
 
 .pb-3 {
   padding-bottom: 1rem;
+}
+.hero-section {
+  background: url('https://images.unsplash.com/photo-1560185127-6b27ef3c051f?ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80') center center no-repeat;
+  background-size: cover;
+  color: white;
+  padding: 100px 0;
+}
+
+.hero-section h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+}
+
+.hero-section p {
+  font-size: 1.5rem;
+}
+
+.featured-venues .card {
+  transition: transform 0.3s ease;
+}
+
+.featured-venues .card:hover {
+  transform: scale(1.05);
+}
+
+.register-cta {
+  background-color: #f8f9fa;
+  padding: 50px 0;
 }
