@@ -1,4 +1,4 @@
-/* Global Styles */
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -18,7 +18,7 @@ code {
 .App {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensure the app takes up the full viewport height */
+  min-height: 100vh; /* app takes up the full viewport height */
 }
 
 /* Header Styles */

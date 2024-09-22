@@ -1,19 +1,36 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getRequest } from '../utils/api';
+import Calendar from '../components/Calendar'; // Calendar component
 
 export default function FetchSingleVenue() {
-	// Change name from SingleVenue to FetchSingleVenue
-	const { id } = useParams(); // Extract the venue ID from the URL
+	const { id } = useParams(); 
 	const [venue, setVenue] = useState(null);
 	const [error, setError] = useState(null);
+	const [bookedDates, setBookedDates] = useState([]); // State to store booked dates
 
 	useEffect(() => {
 		const fetchVenue = async () => {
 			try {
-				const data = await getRequest(`/holidaze/venues/${id}`);
+				// Fetch the venue and owener
+				const data = await getRequest(
+					`/holidaze/venues/${id}?_owner=true&_bookings=true`
+				);
 				setVenue(data.data);
+
+				
+				const dates = data.data.bookings.map((booking) => {
+					const fromDate = new Date(booking.dateFrom);
+					const toDate = new Date(booking.dateTo);
+					// Create an array of dates between dateFrom and dateTo
+					let dateArray = [];
+					for (let d = fromDate; d <= toDate; d.setDate(d.getDate() + 1)) {
+						dateArray.push(new Date(d));
+					}
+					return dateArray;
+				});
+				
+				setBookedDates(dates.flat());
 			} catch (error) {
 				setError('Failed to fetch venue. Please try again.');
 			}
@@ -27,9 +44,10 @@ export default function FetchSingleVenue() {
 	return (
 		<div>
 			<h2>{venue.name}</h2>
+			<hr></hr>
 			<img
-				src={venue.media[0].url} // Display the first image from the media array
-				alt={venue.media[0].alt || venue.name} // Use the alt text or fallback to venue name
+				src={venue.media[0]?.url} 
+				alt={venue.media[0]?.alt || venue.name} 
 				style={{ width: '100%', maxHeight: '300px', objectFit: 'cover' }}
 			/>
 			<p>
@@ -48,11 +66,38 @@ export default function FetchSingleVenue() {
 			<p>
 				<b>Rating: </b>
 				{venue.rating}
-			<p>{venue.description}</p>
 			</p>
-			<hr></hr>
-			<h4>Available Dates</h4>
-			{/* Render calendar logic here */}
+			<p>{venue.description}</p>
+
+			<hr />
+			{/* Owner's Info Section */}
+			{venue.owner && (
+				<div
+					className=""
+					style={{ marginTop: '2px' }}>
+					<h6>Venue Owner</h6>
+					<div style={{ display: 'flex', alignItems: 'center' }}>
+						<img
+							src={venue.owner.avatar.url} // Owner's avatar URL
+							alt={venue.owner.avatar.alt || venue.owner.name} 
+							style={{
+								width: '50px',
+								height: '50px',
+								borderRadius: '50%',
+								marginRight: '10px',
+							}}
+						/>
+						<p style={{ margin: 0 }}>
+							<b>{venue.owner.name}</b> {/* Owner's name */}
+						</p>
+					</div>
+				</div>
+			)}
+
+			<hr />
+			<h4>Unavailable Dates</h4>
+			{/* Calendar component and pass bookedDates */}
+			<Calendar bookedDates={bookedDates} />
 		</div>
 	);
 }

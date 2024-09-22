@@ -1,5 +1,3 @@
-/** @format */
-
 import React, { useEffect, useState } from 'react';
 import { getRequest } from '../utils/api';
 import { Link } from 'react-router-dom';

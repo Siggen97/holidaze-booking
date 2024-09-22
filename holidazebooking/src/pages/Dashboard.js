@@ -13,7 +13,7 @@ export default function Profile() {
 	useEffect(() => {
 		const fetchProfile = async () => {
 			try {
-				const userName = localStorage.getItem('userName'); // Assuming userName is stored on login
+				const userName = localStorage.getItem('userName'); // userName stored on login
 				const data = await getRequest(`/holidaze/profiles/${userName}`);
 				setUserData(data.data);
 				setIsVenueManager(data.data.venueManager);

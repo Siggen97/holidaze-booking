@@ -61,7 +61,7 @@ function AppNavbar() {
 								</Nav.Link>
 								<Nav.Link
 									as={Link}
-									to="/bookings">
+									to="/MyBookings">
 									My Bookings
 								</Nav.Link>
 								<Nav.Link

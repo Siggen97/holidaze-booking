@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './assets/styles/App.css';
@@ -12,6 +11,8 @@ import AppNavbar from './layout/Navbar';
 import AppFooter from './layout/Footer';
 import CreateVenue from './pages/CreateVenue';
 import Venues from './pages/Venues';
+import MyBookings from './pages/MyBookings';
+import MyVenues from './pages/MyVenues';
 
 function App() {
 
@@ -49,6 +50,14 @@ function App() {
 						<Route
 							path="/dashboard"
 							element={<Dashboard />}
+						/>
+						<Route
+							path="/MyBookings"
+							element={<MyBookings />}
+						/>
+						<Route
+							path="/MyVenues"
+							element={<MyVenues />}
 						/>
 						<Route
 							path="/create-venue"

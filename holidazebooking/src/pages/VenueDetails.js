@@ -1,15 +1,16 @@
+/** @format */
 
 import React from 'react';
-import FetchSingleVenue from '../components/singleVenue'; // Named import for venue details
-import BookingForm from '../components/bookingForm'; // Import Booking Form
+import FetchSingleVenue from '../components/singleVenue'; // Component to fetch and display venue details
+import BookingForm from '../components/bookingForm'; // Component to handle booking
 
 function VenueDetails() {
 	return (
-		<div className="container mt-5">
+		<div className="container">
 			<FetchSingleVenue />
 			<hr />
 			<h3>Book this Venue</h3>
-			<BookingForm /> 
+			<BookingForm /> {/* This will handle the booking and price calculation */}
 		</div>
 	);
 }
