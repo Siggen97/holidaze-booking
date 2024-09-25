@@ -13,6 +13,7 @@ import CreateVenue from './pages/CreateVenue';
 import Venues from './pages/Venues';
 import MyBookings from './pages/MyBookings';
 import MyVenues from './pages/MyVenues';
+import EditVenue from './pages/EditVenue';
 
 function App() {
 
@@ -56,12 +57,16 @@ function App() {
 							element={<MyBookings />}
 						/>
 						<Route
-							path="/MyVenues"
+							path="/my-venues"
 							element={<MyVenues />}
 						/>
 						<Route
 							path="/create-venue"
 							element={<CreateVenue />}
+						/>
+						<Route
+							path="/edit-venue/:id"
+							element={<EditVenue />}
 						/>
 					</Routes>
 				</div>

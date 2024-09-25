@@ -1,4 +1,4 @@
-/** @format */
+
 import React, { useState, useEffect } from 'react';
 import { getRequest, putRequest } from '../utils/api'; // Import your request handlers
 import { Link } from 'react-router-dom';
@@ -97,17 +97,17 @@ export default function Profile() {
 							<h5>Venue Manager Options</h5>
 							<Link
 								to="/create-venue"
-								className="btn btn-success mb-2">
+								className="btn btn-primary m-1">
 								Create New Venue
 							</Link>
 							<Link
 								to="/manage-venues"
-								className="btn btn-info mb-2">
+								className="btn btn-info m-1">
 								Manage Venues
 							</Link>
 							<Link
 								to="/view-bookings"
-								className="btn btn-warning mb-2">
+								className="btn btn-warning m-1">
 								View Bookings
 							</Link>
 						</div>

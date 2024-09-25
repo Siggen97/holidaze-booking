@@ -66,7 +66,7 @@ function AppNavbar() {
 								</Nav.Link>
 								<Nav.Link
 									as={Link}
-									to="/myvenues">
+									to="/my-venues">
 									My Venues
 								</Nav.Link>
 								<Nav.Link onClick={handleLogout}>Logout</Nav.Link>

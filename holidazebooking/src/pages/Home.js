@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getRequest } from '../utils/api';
+import { getRequest, getVenues } from '../utils/api';
 
 function Home() {
 	const [venues, setVenues] = useState([]);
@@ -19,7 +19,7 @@ function Home() {
 	useEffect(() => {
 		const fetchVenues = async () => {
 			try {
-				const data = await getRequest('/holidaze/venues');
+				const data = await getVenues('/holidaze/venues');
 				setVenues(data.data.slice(0, 3)); // Get only the first 3 venues for the featured section
 			} catch (error) {
 				setError('Failed to fetch venues. Please try again.');

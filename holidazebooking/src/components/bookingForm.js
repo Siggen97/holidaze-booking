@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { postRequest, getRequest } from '../utils/api'; // Import the GET and POST request handlers
@@ -30,7 +31,7 @@ export default function BookingForm() {
 			const fromDate = new Date(dates.dateFrom);
 			const toDate = new Date(dates.dateTo);
 			const diffInTime = toDate.getTime() - fromDate.getTime();
-			const diffInDays = diffInTime / (1000 * 3600 * 24); // Difference in days
+			const diffInDays = Math.ceil(diffInTime / (1000 * 3600 * 24)); // Difference in days
 			setTotalPrice(diffInDays * pricePerNight); // Total price = number of nights * price per night
 		}
 	}, [dates, pricePerNight]);
@@ -41,12 +42,19 @@ export default function BookingForm() {
 			const bookingData = {
 				dateFrom: dates.dateFrom,
 				dateTo: dates.dateTo,
-				guests,
+				guests: parseInt(guests, 10), // Ensure guests is an integer
 				venueId: id,
 			};
-			await postRequest('/holidaze/bookings', bookingData); // Post booking data
+
+			// Log the data being sent
+			console.log('Booking data being sent:', bookingData);
+
+			// Post booking data
+			await postRequest('/holidaze/bookings', bookingData);
 			setSuccess(true);
 		} catch (error) {
+			// Log full error response for debugging
+			console.error('Booking failed:', error.response?.data || error.message);
 			setError('Failed to book the venue. Please try again.');
 		}
 	};
@@ -58,33 +66,39 @@ export default function BookingForm() {
 			{!success && (
 				<form onSubmit={handleBooking}>
 					<div className="form-group">
+						<label htmlFor="dateFrom">Start Date</label>
 						<input
 							className="form-control mb-2"
 							type="date"
 							name="dateFrom"
+							id="dateFrom"
+							value={dates.dateFrom}
 							onChange={(e) => setDates({ ...dates, dateFrom: e.target.value })}
 							required
 						/>
+						<label htmlFor="dateTo">End Date</label>
 						<input
 							className="form-control mb-2"
 							type="date"
 							name="dateTo"
+							id="dateTo"
+							value={dates.dateTo}
 							onChange={(e) => setDates({ ...dates, dateTo: e.target.value })}
 							required
 						/>
-						<label for="numberGusests">Guests</label>
+						<label htmlFor="numberGuests">Guests</label>
 						<input
 							className="form-control mb-2"
 							type="number"
 							name="guests"
-							id="numberGusests"
-							onChange={(e) => setGuests(e.target.value)}
+							id="numberGuests"
 							value={guests}
+							onChange={(e) => setGuests(e.target.value)}
 							min={1}
 							required
 						/>
 						{dates.dateFrom && dates.dateTo && (
-							<p>Total Price: ${totalPrice}</p> // Display total price based only on the number of nights
+							<p>Total Price: ${totalPrice.toFixed(2)}</p> // Ensure price is displayed with 2 decimal points
 						)}
 						<button
 							type="submit"

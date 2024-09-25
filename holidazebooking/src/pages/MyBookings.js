@@ -27,6 +27,15 @@ export default function MyBookings() {
 		fetchMyBookings();
 	}, [userName]);
 
+	const formatDate = (dateString) => {
+		const date = new Date(dateString);
+		return date.toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+		});
+	};
+
 	if (loading) {
 		return <p>Loading your bookings...</p>;
 	}
@@ -48,13 +57,16 @@ export default function MyBookings() {
 							className="booking-item mb-4 p-3 border rounded">
 							<h5>Booking ID: {booking.id}</h5>
 							<p>
-								<strong>From:</strong> {booking.dateFrom}
+								<strong>From:</strong> {formatDate(booking.dateFrom)}
 							</p>
 							<p>
-								<strong>To:</strong> {booking.dateTo}
+								<strong>To:</strong> {formatDate(booking.dateTo)}
 							</p>
 							<p>
 								<strong>Guests:</strong> {booking.guests}
+							</p>
+							<p>
+								<strong>Created:</strong> {formatDate(booking.created)}
 							</p>
 							<Link
 								className="App-link btn btn-info"

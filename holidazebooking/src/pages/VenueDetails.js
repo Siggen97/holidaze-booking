@@ -1,4 +1,3 @@
-/** @format */
 
 import React from 'react';
 import FetchSingleVenue from '../components/singleVenue'; // Component to fetch and display venue details

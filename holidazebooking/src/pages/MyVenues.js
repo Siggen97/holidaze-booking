@@ -1,12 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
-import { getRequest } from '../utils/api'; // Import the GET request function
+import { getRequest, deleteRequest } from '../utils/api'; // Import the GET request function
 import { Link } from 'react-router-dom';
 
 export default function MyVenues() {
 	const [venues, setVenues] = useState([]);
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(true);
+	
 
 	// Fetch the user's name from localStorage
 	const userName = localStorage.getItem('userName');
@@ -25,6 +26,19 @@ export default function MyVenues() {
 		};
 		fetchMyVenues();
 	}, [userName]);
+
+	const handleDelete = async (venueId) => {
+		if (window.confirm('Are you sure you want to delete this venue?')) {
+			try {
+				await deleteRequest(`/holidaze/venues/${venueId}`);
+				// Remove the deleted venue from the state
+				setVenues(venues.filter((venue) => venue.id !== venueId));
+			} catch (error) {
+				alert('Failed to delete the venue. Please try again.');
+			}
+		}
+	};
+
 
 	if (loading) {
 		return <p>Loading your venues...</p>;
@@ -67,6 +81,16 @@ export default function MyVenues() {
 								to={`/venue/${venue.id}`}>
 								View Venue Details
 							</Link>
+							<Link
+								to={`/edit-venue/${venue.id}`} // Navigate to the EditVenue.js page with venue ID
+								className="btn btn-warning mx-2">
+								Edit
+							</Link>
+							<button
+								className="btn btn-danger"
+								onClick={() => handleDelete(venue.id)}>
+								Delete
+							</button>
 						</div>
 					))}
 				</div>

@@ -2,6 +2,20 @@ import axios from 'axios';
 
 const API_BASE_URL = 'https://v2.api.noroff.dev';
 
+export const getVenues = async () => {
+	try {
+		const response = await axios.get(
+			'https://v2.api.noroff.dev/holidaze/venues'
+		);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching data:', error);
+		throw error;
+	}
+};
+
+
+
 // Function to get the headers with authentication
 const getAuthHeaders = () => {
 	const accessToken = localStorage.getItem('accessToken');
@@ -18,6 +32,7 @@ const getAuthHeaders = () => {
 		},
 	};
 };
+
 
 // Function to handle GET requests
 export const getRequest = async (endpoint) => {
