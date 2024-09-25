@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getRequest, getVenues } from '../utils/api';
+import {  getVenues } from '../utils/api';
 
 function Home() {
 	const [venues, setVenues] = useState([]);

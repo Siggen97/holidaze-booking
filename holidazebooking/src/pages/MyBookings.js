@@ -69,9 +69,9 @@ export default function MyBookings() {
 								<strong>Created:</strong> {formatDate(booking.created)}
 							</p>
 							<Link
-								className="App-link btn btn-info"
-								to={`/venue/${booking.venueId}`}>
-								View Venue Details
+								to={`/venues/${booking.id}`}
+								className="btn btn-primary">
+								View Details
 							</Link>
 						</div>
 					))}
