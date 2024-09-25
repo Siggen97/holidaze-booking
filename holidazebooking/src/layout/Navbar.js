@@ -15,7 +15,7 @@ function AppNavbar() {
 		} else {
 			setIsLoggedIn(false);
 		}
-	}, [isLoggedIn]);
+	}, []);
 
 	// Handle logout functionality
 	const handleLogout = () => {

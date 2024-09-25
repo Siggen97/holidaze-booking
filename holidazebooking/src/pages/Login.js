@@ -43,7 +43,7 @@ const handleSubmit = async (e) => {
 			localStorage.setItem('apiKey', apiKeyResponse.data.data.key);
 
 			navigate('/dashboard');
-			
+			window.location.reload();
 		}
 	} catch (error) {
 		setError('Login failed. Please check your credentials and try again.');
