@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getRequest } from '../utils/api';
+import { getSingleVenue } from '../utils/api';
 import Calendar from '../components/Calendar'; // Calendar component
 
 export default function FetchSingleVenue() {
-	const { id } = useParams(); 
+	const { id } = useParams();
 	const [venue, setVenue] = useState(null);
 	const [error, setError] = useState(null);
 	const [bookedDates, setBookedDates] = useState([]); // State to store booked dates
@@ -12,13 +12,11 @@ export default function FetchSingleVenue() {
 	useEffect(() => {
 		const fetchVenue = async () => {
 			try {
-				// Fetch the venue and owener
-				const data = await getRequest(
-					`/holidaze/venues/${id}?_owner=true&_bookings=true`
-				);
+				// Fetch the venue with the owner and bookings information
+				const data = await getSingleVenue(id);
 				setVenue(data.data);
 
-				
+				// Extract and store the booked dates
 				const dates = data.data.bookings.map((booking) => {
 					const fromDate = new Date(booking.dateFrom);
 					const toDate = new Date(booking.dateTo);
@@ -29,7 +27,6 @@ export default function FetchSingleVenue() {
 					}
 					return dateArray;
 				});
-				
 				setBookedDates(dates.flat());
 			} catch (error) {
 				setError('Failed to fetch venue. Please try again.');
@@ -46,8 +43,8 @@ export default function FetchSingleVenue() {
 			<h2>{venue.name}</h2>
 			<hr></hr>
 			<img
-				src={venue.media[0]?.url} 
-				alt={venue.media[0]?.alt || venue.name} 
+				src={venue.media[0]?.url}
+				alt={venue.media[0]?.alt || venue.name}
 				style={{ width: '100%', maxHeight: '300px', objectFit: 'cover' }}
 			/>
 			<p>
@@ -72,14 +69,12 @@ export default function FetchSingleVenue() {
 			<hr />
 			{/* Owner's Info Section */}
 			{venue.owner && (
-				<div
-					className=""
-					style={{ marginTop: '2px' }}>
+				<div style={{ marginTop: '2px' }}>
 					<h6>Venue Owner</h6>
 					<div style={{ display: 'flex', alignItems: 'center' }}>
 						<img
-							src={venue.owner.avatar.url} // Owner's avatar URL
-							alt={venue.owner.avatar.alt || venue.owner.name} 
+							src={venue.owner.avatar.url}
+							alt={venue.owner.avatar.alt || venue.owner.name}
 							style={{
 								width: '50px',
 								height: '50px',
@@ -88,7 +83,7 @@ export default function FetchSingleVenue() {
 							}}
 						/>
 						<p style={{ margin: 0 }}>
-							<b>{venue.owner.name}</b> {/* Owner's name */}
+							<b>{venue.owner.name}</b>
 						</p>
 					</div>
 				</div>
@@ -96,7 +91,6 @@ export default function FetchSingleVenue() {
 
 			<hr />
 			<h4>Unavailable Dates</h4>
-			{/* Calendar component and pass bookedDates */}
 			<Calendar bookedDates={bookedDates} />
 		</div>
 	);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getRequest } from '../utils/api'; // Importing the GET request function
+import { getRequest, deleteRequest } from '../utils/api'; // Importing the GET request function
 import { Link } from 'react-router-dom';
 
 export default function MyBookings() {
@@ -13,11 +13,11 @@ export default function MyBookings() {
 	useEffect(() => {
 		const fetchMyBookings = async () => {
 			try {
-				// Fetch all bookings for the current user profile
+				// Fetch all bookings for the current user profile, including venue details
 				const data = await getRequest(
-					`/holidaze/profiles/${userName}/bookings`
+					`/holidaze/profiles/${userName}/bookings?_venue=true`
 				);
-				setBookings(data.data);
+				setBookings(data.data); // Assuming bookings with venue info are returned in data.data
 			} catch (error) {
 				setError('Failed to fetch your bookings. Please try again.');
 			} finally {
@@ -35,6 +35,18 @@ export default function MyBookings() {
 			day: 'numeric',
 		});
 	};
+
+		const handleDelete = async (bookingId) => {
+			if (window.confirm('Are you sure you want to delete this booking?')) {
+				try {
+					await deleteRequest(`/holidaze/bookings/${bookingId}`);
+					alert('Booking deleted successfully!');
+					setBookings(bookings.filter((booking) => booking.id !== bookingId)); // Remove from state
+				} catch (error) {
+					setError('Failed to delete booking.');
+				}
+			}
+		};
 
 	if (loading) {
 		return <p>Loading your bookings...</p>;
@@ -68,11 +80,23 @@ export default function MyBookings() {
 							<p>
 								<strong>Created:</strong> {formatDate(booking.created)}
 							</p>
-							<Link
-								to={`/venues/${booking.id}`}
-								className="btn btn-primary">
-								View Details
-							</Link>
+							{/* Delete Button */}
+							<button
+								className="btn btn-danger mx-2"
+								onClick={() => handleDelete(booking.id)}>
+								Delete
+							</button>
+
+							{/* Conditionally render the View Details button if venue exists */}
+							{booking.venue && booking.venue.id ? (
+								<Link
+									to={`/venue/${booking.venue.id}`} // Dynamically link to venue page
+									className="btn btn-primary">
+									View Details
+								</Link>
+							) : (
+								<p className="text-muted">Venue details unavailable.</p>
+							)}
 						</div>
 					))}
 				</div>

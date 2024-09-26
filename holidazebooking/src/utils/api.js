@@ -2,18 +2,6 @@ import axios from 'axios';
 
 const API_BASE_URL = 'https://v2.api.noroff.dev';
 
-export const getVenues = async () => {
-	try {
-		const response = await axios.get(
-			'https://v2.api.noroff.dev/holidaze/venues'
-		);
-		return response.data;
-	} catch (error) {
-		console.error('Error fetching data:', error);
-		throw error;
-	}
-};
-
 
 
 // Function to get the headers with authentication
@@ -33,20 +21,29 @@ const getAuthHeaders = () => {
 	};
 };
 
+// Function to handle non-authenticated GET requests (for venues, etc.)
+export const getPublicRequest = async (endpoint) => {
+	try {
+		const response = await axios.get(`${API_BASE_URL}${endpoint}`);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching public data:', error);
+		throw error;
+	}
+};
 
-// Function to handle GET requests
+// Function to handle authenticated GET requests (for user-specific data)
 export const getRequest = async (endpoint) => {
 	try {
-		const response = await axios.get(
-			`${API_BASE_URL}${endpoint}`,
-			getAuthHeaders()
-		);
+		const response = await axios.get(`${API_BASE_URL}${endpoint}`, getAuthHeaders());
 		return response.data;
 	} catch (error) {
 		console.error('Error fetching data:', error);
 		throw error;
 	}
 };
+
+
 
 // Function to handle POST requests
 export const postRequest = async (endpoint, data) => {
@@ -92,9 +89,28 @@ export const deleteRequest = async (endpoint) => {
 	}
 };
 
-// Fetch user profile data
+// Fetch public venues (no authentication required)
+export const getVenues = async () => {
+	return await getPublicRequest('/holidaze/venues');
+};
+
+// Fetch a single venue (no authentication required)
+export const getSingleVenue = async (id) => {
+	try {
+		// Append query parameters to get owner and bookings data
+		const response = await axios.get(
+			`${API_BASE_URL}/holidaze/venues/${id}?_owner=true&_bookings=true`
+		);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching single venue:', error);
+		throw error;
+	}
+};
+
+// Fetch user profile data (requires authentication)
 export const fetchUserProfile = async () => {
-	const userName = localStorage.getItem('userName'); // Assuming the user's name is stored in local storage after login
+	const userName = localStorage.getItem('userName'); 
 	if (!userName) {
 		throw new Error('User name is missing from local storage.');
 	}

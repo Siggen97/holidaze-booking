@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getRequest } from '../utils/api';
+import { getVenues } from '../utils/api';
 import { Link } from 'react-router-dom';
 
 export default function FetchAllVenues() {
@@ -14,7 +14,7 @@ export default function FetchAllVenues() {
 				if (searchTerm) {
 					url = `/holidaze/venues/search?q=${searchTerm}`;
 				}
-				const data = await getRequest(url);
+				const data = await getVenues(url);
 				setVenues(data.data);
 			} catch (error) {
 				setError('Failed to fetch venues. Please try again.');
