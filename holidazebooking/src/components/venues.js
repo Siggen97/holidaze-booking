@@ -53,7 +53,12 @@ export default function FetchAllVenues() {
 						)}
 						<h5>{venue.name}</h5>
 						<p>{venue.description}</p>
-						<Link className='App-link btn btn-info' to={`/venue/${venue.id}`}>More details</Link>
+						<Link
+							className="App-link btn btn-info"
+							id="holidazeBTN"
+							to={`/venue/${venue.id}`}>
+							More details
+						</Link>
 					</div>
 				))}
 			</div>

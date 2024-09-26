@@ -78,7 +78,8 @@ export default function MyVenues() {
 							</p>
 							<Link
 								className="App-link btn btn-info"
-								to={`/venue/${venue.id}`}>
+								to={`/venue/${venue.id}`}
+								id="holidazeBTN">
 								View Venue Details
 							</Link>
 							<Link

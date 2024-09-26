@@ -91,7 +91,8 @@ export default function MyBookings() {
 							{booking.venue && booking.venue.id ? (
 								<Link
 									to={`/venue/${booking.venue.id}`} // Dynamically link to venue page
-									className="btn btn-primary">
+									className="btn btn-primary"
+									id="holidazeBTN">
 									View Details
 								</Link>
 							) : (

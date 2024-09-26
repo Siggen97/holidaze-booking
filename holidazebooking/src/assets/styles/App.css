@@ -83,6 +83,7 @@ code {
   background-size: cover;
   color: white;
   padding: 100px 0;
+  border-radius: 10px;
 }
 
 .hero-section h1 {
@@ -105,4 +106,10 @@ code {
 .register-cta {
   background-color: #f8f9fa;
   padding: 50px 0;
+  border-radius: 10px;
+}
+#holidazeBTN {
+  background-color: #5a67d8;
+  color: white;
+  border: #5a67d8;
 }

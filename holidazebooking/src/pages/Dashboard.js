@@ -80,7 +80,8 @@ export default function Profile() {
 							onChange={(e) => setNewAvatarUrl(e.target.value)}
 						/>
 						<button
-							className="btn btn-primary"
+							className="btn btn-success"
+							
 							onClick={handleAvatarUpdate}>
 							Update Avatar
 						</button>
@@ -101,13 +102,15 @@ export default function Profile() {
 								Create New Venue
 							</Link>
 							<Link
-								to="/manage-venues"
-								className="btn btn-info m-1">
+								to="/my-venues"
+								className="btn btn-info m-1"
+								id="holidazeBTN">
 								Manage Venues
 							</Link>
 							<Link
-								to="/view-bookings"
-								className="btn btn-warning m-1">
+								to="/MyBookings"
+								className="btn btn-warning m-1"
+								id="holidazeBTN">
 								View Bookings
 							</Link>
 						</div>
@@ -120,6 +123,7 @@ export default function Profile() {
 							</p>
 							<button
 								className="btn btn-primary"
+								id="holidazeBTN"
 								onClick={async () => {
 									try {
 										const userName = localStorage.getItem('userName');

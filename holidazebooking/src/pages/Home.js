@@ -82,7 +82,8 @@ function Home() {
 										</p>
 										<Link
 											to={`/venue/${venue.id}`}
-											className="btn btn-primary">
+											className="btn btn-primary"
+											id="holidazeBTN">
 											View Details
 										</Link>
 									</div>
@@ -106,7 +107,8 @@ function Home() {
 							</p>
 							<Link
 								to="/dashboard"
-								className="btn btn-primary btn-lg">
+								className="btn btn-primary btn-lg"
+								id="holidazeBTN">
 								Become a Venue Manager
 							</Link>
 						</>
@@ -119,7 +121,8 @@ function Home() {
 							</p>
 							<Link
 								to="/register"
-								className="btn btn-primary btn-lg">
+								className="btn btn-primary btn-lg"
+								id="holidazeBTN">
 								Register as a Customer
 							</Link>
 						</>

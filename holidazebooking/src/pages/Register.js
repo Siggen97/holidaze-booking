@@ -186,7 +186,8 @@ export default function Register() {
 
 				<button
 					type="submit"
-					className="btn btn-primary mt-3 mb-3">
+					className="btn btn-primary mt-3 mb-3"
+					id="holidazeBTN">
 					Register
 				</button>
 			</form>

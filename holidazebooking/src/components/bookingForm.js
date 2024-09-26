@@ -102,7 +102,8 @@ export default function BookingForm() {
 						)}
 						<button
 							type="submit"
-							className="btn btn-primary">
+							className="btn btn-primary"
+							id="holidazeBTN">
 							Book Venue
 						</button>
 					</div>
