@@ -16,7 +16,7 @@ export default function MyVenues() {
 		const fetchMyVenues = async () => {
 			try {
 				// Fetch all venues created by the current user
-				const data = await getRequest(`/holidaze/profiles/${userName}/venues`);
+				const data = await getRequest(`/holidaze/profiles/${userName}/venues?_bookings=true`);
 				setVenues(data.data);
 			} catch (error) {
 				setError('Failed to fetch your venues. Please try again.');
@@ -39,6 +39,14 @@ export default function MyVenues() {
 		}
 	};
 
+		const formatDate = (dateString) => {
+			const date = new Date(dateString);
+			return date.toLocaleDateString('en-US', {
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric',
+			});
+		};
 
 	if (loading) {
 		return <p>Loading your venues...</p>;
@@ -59,7 +67,7 @@ export default function MyVenues() {
 						<div
 							key={venue.id}
 							className="venue-item mb-5 p-3 border rounded">
-							{/* Display venue details */}
+							{/* venue details */}
 							{venue.media.length > 0 && (
 								<img
 									className="card-img-top"
@@ -76,6 +84,34 @@ export default function MyVenues() {
 							<p>
 								<strong>Max Guests:</strong> {venue.maxGuests}
 							</p>
+							{/* bookings for the venue */}
+							{venue.bookings && venue.bookings.length > 0 ? (
+								<div className="mt-3">
+									<h6>Bookings for this venue:</h6>
+									<ul>
+										{venue.bookings.map((booking) => (
+											<li
+												key={booking.id}
+												className="mb-2">
+												<p>
+													<strong>Customer Name:</strong>{' '}
+													{booking.customer.name}
+												</p>
+												<p>
+													<strong>Guests:</strong> {booking.guests}
+												</p>
+												<p>
+													<strong>From:</strong> {formatDate(booking.dateFrom)}{' '}
+													-<strong> To:</strong> {formatDate(booking.dateTo)}
+												</p>
+												
+											</li>
+										))}
+									</ul>
+								</div>
+							) : (
+								<p>No bookings for this venue yet.</p>
+							)}
 							<Link
 								className="App-link btn btn-info"
 								to={`/venue/${venue.id}`}

@@ -97,11 +97,6 @@ export default function Profile() {
 						<div>
 							<h5>Venue Manager Options</h5>
 							<Link
-								to="/create-venue"
-								className="btn btn-primary m-1">
-								Create New Venue
-							</Link>
-							<Link
 								to="/my-venues"
 								className="btn btn-info m-1"
 								id="holidazeBTN">
@@ -112,6 +107,12 @@ export default function Profile() {
 								className="btn btn-warning m-1"
 								id="holidazeBTN">
 								View Bookings
+							</Link>
+							<br />
+							<Link
+								to="/create-venue"
+								className="btn btn-primary m-1">
+								Create New Venue
 							</Link>
 						</div>
 					) : (
