@@ -90,8 +90,8 @@ export const deleteRequest = async (endpoint) => {
 };
 
 // Fetch public venues (no authentication required)
-export const getVenues = async () => {
-	return await getPublicRequest('/holidaze/venues');
+export const getVenues = async (url) => {
+	return await getPublicRequest(url);
 };
 
 // Fetch a single venue (no authentication required)

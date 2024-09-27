@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { postRequest, getRequest } from '../utils/api'; // Import the GET and POST request handlers
 
 export default function BookingForm() {
@@ -11,6 +11,7 @@ export default function BookingForm() {
 	const [totalPrice, setTotalPrice] = useState(0); // Total calculated price
 	const [error, setError] = useState(null);
 	const [success, setSuccess] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	// Fetch the venue details (including price) when the component mounts
 	useEffect(() => {
@@ -24,6 +25,16 @@ export default function BookingForm() {
 		};
 		fetchVenueDetails();
 	}, [id]);
+
+	// Check if user is logged in by checking the accessToken in localStorage
+	useEffect(() => {
+		const accessToken = localStorage.getItem('accessToken');
+		if (accessToken) {
+			setIsLoggedIn(true);
+		} else {
+			setIsLoggedIn(false);
+		}
+	}, []);
 
 	// Calculate total price when dates change
 	useEffect(() => {
@@ -61,53 +72,78 @@ export default function BookingForm() {
 
 	return (
 		<div>
-			{error && <p className="text-danger">{error}</p>}
-			{success && <p className="text-success">Booking successful!</p>}
-			{!success && (
-				<form onSubmit={handleBooking}>
-					<div className="form-group">
-						<label htmlFor="dateFrom">Start Date</label>
-						<input
-							className="form-control mb-2"
-							type="date"
-							name="dateFrom"
-							id="dateFrom"
-							value={dates.dateFrom}
-							onChange={(e) => setDates({ ...dates, dateFrom: e.target.value })}
-							required
-						/>
-						<label htmlFor="dateTo">End Date</label>
-						<input
-							className="form-control mb-2"
-							type="date"
-							name="dateTo"
-							id="dateTo"
-							value={dates.dateTo}
-							onChange={(e) => setDates({ ...dates, dateTo: e.target.value })}
-							required
-						/>
-						<label htmlFor="numberGuests">Guests</label>
-						<input
-							className="form-control mb-2"
-							type="number"
-							name="guests"
-							id="numberGuests"
-							value={guests}
-							onChange={(e) => setGuests(e.target.value)}
-							min={1}
-							required
-						/>
-						{dates.dateFrom && dates.dateTo && (
-							<p>Total Price: ${totalPrice.toFixed(2)}</p> // Ensure price is displayed with 2 decimal points
-						)}
-						<button
-							type="submit"
-							className="btn btn-primary"
-							id="holidazeBTN">
-							Book Venue
-						</button>
-					</div>
-				</form>
+			{isLoggedIn ? (
+				<>
+					{error && <p className="text-danger">{error}</p>}
+					{success && <p className="text-success">Booking successful!</p>}
+					{!success && (
+						<form onSubmit={handleBooking}>
+							<div className="form-group">
+								<label htmlFor="dateFrom">Start Date</label>
+								<input
+									className="form-control mb-2"
+									type="date"
+									name="dateFrom"
+									id="dateFrom"
+									value={dates.dateFrom}
+									onChange={(e) =>
+										setDates({ ...dates, dateFrom: e.target.value })
+									}
+									required
+								/>
+								<label htmlFor="dateTo">End Date</label>
+								<input
+									className="form-control mb-2"
+									type="date"
+									name="dateTo"
+									id="dateTo"
+									value={dates.dateTo}
+									onChange={(e) =>
+										setDates({ ...dates, dateTo: e.target.value })
+									}
+									required
+								/>
+								<label htmlFor="numberGuests">Guests</label>
+								<input
+									className="form-control mb-2"
+									type="number"
+									name="guests"
+									id="numberGuests"
+									value={guests}
+									onChange={(e) => setGuests(e.target.value)}
+									min={1}
+									required
+								/>
+								{dates.dateFrom && dates.dateTo && (
+									<p>Total Price: ${totalPrice.toFixed(2)}</p> // Ensure price is displayed with 2 decimal points
+								)}
+								<button
+									type="submit"
+									className="btn btn-primary"
+									id="holidazeBTN">
+									Book Venue
+								</button>
+							</div>
+						</form>
+					)}
+				</>
+			) : (
+				<>
+					<Link
+						className="btn btn-primary m-1"
+						id="holidazeBTN"
+						as={Link}
+						to="/login">
+						Login
+					</Link>
+					<Link
+						className="btn btn-primary m-1"
+						id="holidazeBTN"
+						as={Link}
+						to="/register">
+						Register
+					</Link>
+				</>
 			)}
 		</div>
 	);
