@@ -51,6 +51,5 @@ Feel free to contribute to the project, adding new ideas for interaction or desi
 Please make sure to open a pull request so code can be reviewed.
 
 ## Contact
-
-[email]: [sigrid.lydvo@hotmail.com]
+email: sigrid.lydvo@hotmail.com
 
