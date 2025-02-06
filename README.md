@@ -1,6 +1,6 @@
 # Holidaze Booking
 
-![image]('https://i.imghippo.com/files/KmmbV1728815812.png')
+'https://i.imghippo.com/files/KmmbV1728815812.png'
 
 A simple overview of the use/purpose of the project.
 
